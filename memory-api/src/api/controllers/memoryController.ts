@@ -27,7 +27,7 @@ export const memoryController = {
       if (!memory) {
         return reply.code(404).send({ error: "Memory not found" });
       }
-      return reply.send(memory);
+      return reply.code(200).send(memory);
     } catch (error) {
       request.log.error(error);
       return reply.code(500).send({ error: "Failed to retrieve memory" });
