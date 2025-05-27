@@ -31,6 +31,12 @@ fastify.register(swagger, {
       description: 'API for storing and retrieving campaign data for Shadowrun Anarchy GPT',
       version: '1.0.0',
     },
+    servers: [
+      {
+        url: process.env.API_BASE_URL || `http://localhost:${config.server.port}`,
+        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
+      },
+    ],
     components: {
       securitySchemes: {
         apiKey: {
@@ -82,6 +88,28 @@ fastify.register(discordRoutes, { prefix: '/discord' });
 // Health check route
 fastify.get('/health', async () => {
   return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
+// API info endpoint for custom GPTs
+fastify.get('/api-info', async (request) => {
+  const baseUrl = process.env.API_BASE_URL || `http://${request.hostname}:${config.server.port}`;
+  return {
+    title: 'Shadowrun Anarchy GPT Memory API',
+    version: '1.0.0',
+    description: 'API for storing and retrieving campaign data for Shadowrun Anarchy GPT',
+    baseUrl,
+    endpoints: {
+      openapi_json: `${baseUrl}/openapi.json`,
+      openapi_yaml: `${baseUrl}/openapi.yml`,
+      docs: `${baseUrl}/docs`,
+      health: `${baseUrl}/health`,
+    },
+    authentication: {
+      type: 'apiKey',
+      header: 'x-api-key',
+      description: 'Include your API key in the x-api-key header',
+    },
+  };
 });
 
 // Start server
