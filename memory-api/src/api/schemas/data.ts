@@ -27,8 +27,9 @@ export const dataListResponseSchema = {
 
 // New schemas for arbitrary JSON documents
 export const documentSchema = {
-  description: 'Any valid JSON document'
-  // No type validation - accepts any JSON
+  type: 'object',
+  description: 'Any valid JSON document',
+  additionalProperties: true  // This allows any properties
 };
 
 export const documentResponseSchema = {
@@ -37,7 +38,11 @@ export const documentResponseSchema = {
     _id: { type: 'string' },
     campaignId: { type: 'string' },
     key: { type: 'string' },
-    value: { description: 'The stored JSON document' },
+    value: {
+      type: 'object',
+      description: 'The stored JSON document',
+      additionalProperties: true
+    },
     createdAt: { type: 'string', format: 'date-time' },
     updatedAt: { type: 'string', format: 'date-time' }
   }
