@@ -1,0 +1,1513 @@
+openapi: 3.0.3
+info:
+  title: Shadowrun Anarchy GPT Memory API
+  description: API for storing and retrieving campaign data for Shadowrun Anarchy GPT
+  version: 1.0.0
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: x-api-key
+      in: header
+  schemas: {}
+paths:
+  /campaigns/:
+    get:
+      tags:
+        - campaigns
+      description: Get all campaigns
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    title:
+                      type: string
+                    setting:
+                      type: string
+                    theme:
+                      type: string
+                    houseRules:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+    post:
+      tags:
+        - campaigns
+      description: Create a new campaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - setting
+                - theme
+              properties:
+                title:
+                  type: string
+                setting:
+                  type: string
+                theme:
+                  type: string
+                houseRules:
+                  type: string
+        required: true
+      responses:
+        '201':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  title:
+                    type: string
+                  setting:
+                    type: string
+                  theme:
+                    type: string
+                  houseRules:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /campaigns/{id}:
+    get:
+      tags:
+        - campaigns
+      description: Get a campaign by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  title:
+                    type: string
+                  setting:
+                    type: string
+                  theme:
+                    type: string
+                  houseRules:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    put:
+      tags:
+        - campaigns
+      description: Update a campaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - setting
+                - theme
+              properties:
+                title:
+                  type: string
+                setting:
+                  type: string
+                theme:
+                  type: string
+                houseRules:
+                  type: string
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  title:
+                    type: string
+                  setting:
+                    type: string
+                  theme:
+                    type: string
+                  houseRules:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - campaigns
+      description: Delete a campaign
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /sessions/:
+    get:
+      tags:
+        - sessions
+      description: Get all sessions
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    title:
+                      type: string
+                    summary:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+    post:
+      tags:
+        - sessions
+      description: Create a new session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - campaignId
+                - title
+              properties:
+                campaignId:
+                  type: string
+                title:
+                  type: string
+                summary:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+        required: true
+      responses:
+        '201':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  title:
+                    type: string
+                  summary:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /sessions/{id}:
+    get:
+      tags:
+        - sessions
+      description: Get a session by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  title:
+                    type: string
+                  summary:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    put:
+      tags:
+        - sessions
+      description: Update a session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - campaignId
+                - title
+              properties:
+                campaignId:
+                  type: string
+                title:
+                  type: string
+                summary:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  title:
+                    type: string
+                  summary:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - sessions
+      description: Delete a session
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /sessions/campaign/{campaignId}:
+    get:
+      tags:
+        - sessions
+      description: Get all sessions for a campaign
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    title:
+                      type: string
+                    summary:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+  /characters/:
+    get:
+      tags:
+        - characters
+      description: Get all characters
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    name:
+                      type: string
+                    playerName:
+                      type: string
+                    concept:
+                      type: string
+                    attributes:
+                      type: object
+                    qualities:
+                      type: array
+                      items:
+                        type: string
+                    skills:
+                      type: object
+                    gear:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    history:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+    post:
+      tags:
+        - characters
+      description: Create a new character
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - campaignId
+                - name
+                - playerName
+                - concept
+              properties:
+                campaignId:
+                  type: string
+                name:
+                  type: string
+                playerName:
+                  type: string
+                concept:
+                  type: string
+                attributes:
+                  type: object
+                  additionalProperties:
+                    type: number
+                qualities:
+                  type: array
+                  items:
+                    type: string
+                skills:
+                  type: object
+                  additionalProperties:
+                    type: number
+                gear:
+                  type: array
+                  items:
+                    type: string
+                description:
+                  type: string
+                history:
+                  type: string
+        required: true
+      responses:
+        '201':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  name:
+                    type: string
+                  playerName:
+                    type: string
+                  concept:
+                    type: string
+                  attributes:
+                    type: object
+                  qualities:
+                    type: array
+                    items:
+                      type: string
+                  skills:
+                    type: object
+                  gear:
+                    type: array
+                    items:
+                      type: string
+                  description:
+                    type: string
+                  history:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /characters/{id}:
+    get:
+      tags:
+        - characters
+      description: Get a character by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  name:
+                    type: string
+                  playerName:
+                    type: string
+                  concept:
+                    type: string
+                  attributes:
+                    type: object
+                  qualities:
+                    type: array
+                    items:
+                      type: string
+                  skills:
+                    type: object
+                  gear:
+                    type: array
+                    items:
+                      type: string
+                  description:
+                    type: string
+                  history:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    put:
+      tags:
+        - characters
+      description: Update a character
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - campaignId
+                - name
+                - playerName
+                - concept
+              properties:
+                campaignId:
+                  type: string
+                name:
+                  type: string
+                playerName:
+                  type: string
+                concept:
+                  type: string
+                attributes:
+                  type: object
+                  additionalProperties:
+                    type: number
+                qualities:
+                  type: array
+                  items:
+                    type: string
+                skills:
+                  type: object
+                  additionalProperties:
+                    type: number
+                gear:
+                  type: array
+                  items:
+                    type: string
+                description:
+                  type: string
+                history:
+                  type: string
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  name:
+                    type: string
+                  playerName:
+                    type: string
+                  concept:
+                    type: string
+                  attributes:
+                    type: object
+                  qualities:
+                    type: array
+                    items:
+                      type: string
+                  skills:
+                    type: object
+                  gear:
+                    type: array
+                    items:
+                      type: string
+                  description:
+                    type: string
+                  history:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - characters
+      description: Delete a character
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /characters/campaign/{campaignId}:
+    get:
+      tags:
+        - characters
+      description: Get all characters for a campaign
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    name:
+                      type: string
+                    playerName:
+                      type: string
+                    concept:
+                      type: string
+                    attributes:
+                      type: object
+                    qualities:
+                      type: array
+                      items:
+                        type: string
+                    skills:
+                      type: object
+                    gear:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    history:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+  /data/:
+    get:
+      tags:
+        - data
+      description: Get all data
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    key:
+                      type: string
+                    value:
+                      type: object
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+  /data/{id}:
+    get:
+      tags:
+        - data
+      description: Get data by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - data
+      description: Delete data by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /data/campaign/{campaignId}:
+    get:
+      tags:
+        - data
+      description: Get all data for a campaign
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    campaignId:
+                      type: string
+                    key:
+                      type: string
+                    value:
+                      type: object
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+    post:
+      tags:
+        - data
+      description: Create or update data for a campaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+                - value
+              properties:
+                key:
+                  type: string
+                value:
+                  type: object
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /data/campaign/{campaignId}/key:
+    get:
+      tags:
+        - data
+      description: Get data by campaign ID and key
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - data
+      description: Delete data by campaign ID and key
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /data/document:
+    post:
+      tags:
+        - document
+      description: Create or update a document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid JSON document
+              additionalProperties: true
+        description: Any valid JSON document
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                    description: The stored JSON document
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /data/document/{id}:
+    get:
+      tags:
+        - document
+      description: Get document by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                    description: The stored JSON document
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - document
+      description: Delete document by ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /data/campaign/{campaignId}/documents:
+    post:
+      tags:
+        - data
+      description: Store an arbitrary JSON document in a campaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid JSON document
+              additionalProperties: true
+        description: Any valid JSON document
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+      responses:
+        '201':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                    description: The stored JSON document
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  /data/campaign/{campaignId}/documents/{documentId}:
+    put:
+      tags:
+        - data
+      description: Update an arbitrary JSON document by document ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid JSON document
+              additionalProperties: true
+        description: Any valid JSON document
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: documentId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                    description: The stored JSON document
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    get:
+      tags:
+        - data
+      description: Get an arbitrary JSON document by document ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: documentId
+          required: true
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  campaignId:
+                    type: string
+                  key:
+                    type: string
+                  value:
+                    type: object
+                    description: The stored JSON document
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      tags:
+        - data
+      description: Delete an arbitrary JSON document by document ID
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: campaignId
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: documentId
+          required: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /discord/messages:
+    get:
+      tags:
+        - discord
+      description: Get messages from a Discord channel
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: channelId
+          required: true
+        - schema:
+            type: string
+            pattern: ^[0-9]+$
+          in: query
+          name: limit
+          required: false
+      responses:
+        '200':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    channelId:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        username:
+                          type: string
+                    content:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time
+        '400':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '503':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    post:
+      tags:
+        - discord
+      description: Send a message to a Discord channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - channelId
+                - content
+              properties:
+                channelId:
+                  type: string
+                content:
+                  type: string
+        required: true
+      responses:
+        '201':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  channelId:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      username:
+                        type: string
+                  content:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+        '400':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '503':
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+servers:
+  - url: http://localhost:8080
+    description: Development server
+security:
+  - apiKey: []
+tags:
+  - name: campaigns
+    description: Campaign management endpoints
+  - name: sessions
+    description: Session management endpoints
+  - name: characters
+    description: Character management endpoints
+  - name: data
+    description: Arbitrary data storage endpoints
+  - name: discord
+    description: Discord integration endpoints

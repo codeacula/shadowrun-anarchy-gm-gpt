@@ -1,102 +1,105 @@
-import Fastify from 'fastify';
-import swagger from '@fastify/swagger';
-import swaggerUI from '@fastify/swagger-ui';
-import cors from '@fastify/cors';
-import connectToDatabase from './utils/db';
-import config from './config';
+import cors from "@fastify/cors";
+import swagger from "@fastify/swagger";
+import swaggerUI from "@fastify/swagger-ui";
+import Fastify from "fastify";
+import config from "./config";
+import connectToDatabase from "./utils/db";
 
 // Import yaml library
-const yaml = require('js-yaml');
+const yaml = require("js-yaml");
 
 // Import routes
-import campaignRoutes from './api/routes/campaigns';
-import sessionRoutes from './api/routes/sessions';
-import characterRoutes from './api/routes/characters';
-import dataRoutes from './api/routes/data';
-import discordRoutes from './api/routes/discord';
+
+import discordRoutes from "./api/routes/discord";
+import memoryRoutes from "./api/routes/memoryRoutes";
 
 // Create Fastify instance
 const fastify = Fastify({ logger: true });
 
 // Register plugins
 fastify.register(cors, {
-  origin: '*', // In production, you may want to restrict this to specific origins
+  origin: "*", // In production, you may want to restrict this to specific origins
 });
 
 // Register OpenAPI/Swagger
 fastify.register(swagger, {
   openapi: {
     info: {
-      title: 'Shadowrun Anarchy GPT Memory API',
-      description: 'API for storing and retrieving campaign data for Shadowrun Anarchy GPT',
-      version: '1.0.0',
+      title: "Shadowrun Anarchy GPT Memory API",
+      description:
+        "API for storing and retrieving campaign data for Shadowrun Anarchy GPT",
+      version: "1.0.0",
     },
     servers: [
       {
-        url: process.env.API_BASE_URL || `http://localhost:${config.server.port}`,
-        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
+        url:
+          process.env.API_BASE_URL || `http://localhost:${config.server.port}`,
+        description:
+          process.env.NODE_ENV === "production"
+            ? "Production server"
+            : "Development server",
       },
     ],
     components: {
       securitySchemes: {
         apiKey: {
-          type: 'apiKey',
-          name: 'x-api-key',
-          in: 'header',
+          type: "apiKey",
+          name: "x-api-key",
+          in: "header",
         },
       },
     },
     security: [{ apiKey: [] }],
     tags: [
-      { name: 'campaigns', description: 'Campaign management endpoints' },
-      { name: 'sessions', description: 'Session management endpoints' },
-      { name: 'characters', description: 'Character management endpoints' },
-      { name: 'data', description: 'Arbitrary data storage endpoints' },
-      { name: 'discord', description: 'Discord integration endpoints' },
+      { name: "campaigns", description: "Campaign management endpoints" },
+      { name: "sessions", description: "Session management endpoints" },
+      { name: "characters", description: "Character management endpoints" },
+      { name: "data", description: "Arbitrary data storage endpoints" },
+      { name: "discord", description: "Discord integration endpoints" },
     ],
   },
 });
 
 fastify.register(swaggerUI, {
-  routePrefix: '/docs',
+  routePrefix: "/docs",
   uiConfig: {
-    docExpansion: 'list',
+    docExpansion: "list",
     deepLinking: true,
   },
 });
 
 // OpenAPI JSON endpoint
-fastify.get('/openapi.json', async () => {
+fastify.get("/openapi.json", async () => {
   return fastify.swagger();
 });
 
 // OpenAPI YAML endpoint
-fastify.get('/openapi.yml', async (request, reply) => {
+fastify.get("/openapi.yml", async (request, reply) => {
   const spec = fastify.swagger();
   const yamlSpec = yaml.dump(spec);
-  reply.type('text/yaml');
+  reply.type("text/yaml");
   return yamlSpec;
 });
 
-// Register routes
-fastify.register(campaignRoutes, { prefix: '/campaigns' });
-fastify.register(sessionRoutes, { prefix: '/sessions' });
-fastify.register(characterRoutes, { prefix: '/characters' });
-fastify.register(dataRoutes, { prefix: '/data' });
-fastify.register(discordRoutes, { prefix: '/discord' });
+// Register new memory routes
+fastify.register(memoryRoutes);
+fastify.register(discordRoutes, { prefix: "/discord" });
 
 // Health check route
-fastify.get('/health', async () => {
-  return { status: 'ok', timestamp: new Date().toISOString() };
+fastify.get("/health", async () => {
+  return { status: "ok", timestamp: new Date().toISOString() };
 });
 
 // API info endpoint for custom GPTs
-fastify.get('/api-info', async (request) => {
-  const baseUrl = process.env.API_BASE_URL || `http://${request.hostname}:${config.server.port}`;
+fastify.get("/api-info", async (request) => {
+  const baseUrl =
+    process.env.API_BASE_URL ||
+    `http://${request.hostname}:${config.server.port}`;
   return {
-    title: 'Shadowrun Anarchy GPT Memory API',
-    version: '1.0.0',
-    description: 'API for storing and retrieving campaign data for Shadowrun Anarchy GPT',
+    title: "Shadowrun Anarchy GPT Memory API",
+    version: "1.0.0",
+    description:
+      "API for storing and retrieving campaign data for Shadowrun Anarchy GPT",
     baseUrl,
     endpoints: {
       openapi_json: `${baseUrl}/openapi.json`,
@@ -105,9 +108,9 @@ fastify.get('/api-info', async (request) => {
       health: `${baseUrl}/health`,
     },
     authentication: {
-      type: 'apiKey',
-      header: 'x-api-key',
-      description: 'Include your API key in the x-api-key header',
+      type: "apiKey",
+      header: "x-api-key",
+      description: "Include your API key in the x-api-key header",
     },
   };
 });
