@@ -1,10 +1,14 @@
-# ShadowrunGptMemory
+# Shadowrun Anarchy GPT Project
 
-ShadowrunGptMemory is a C# WebAPI project designed to manage users, campaigns, sessions, and characters in a data-oriented and domain-driven manner. The application utilizes Inversion of Control (IoC) principles and supports OAuth2 for secure user authentication.
+This repository contains multiple implementations for managing Shadowrun Anarchy RPG campaigns:
 
-## Project Structure
+1. **ShadowrunGptMemory** - A C# WebAPI project designed to manage users, campaigns, sessions, and characters in a data-oriented and domain-driven manner.
 
-The project is organized into several key components:
+2. **Memory API** - A Fastify/TypeScript web API for storing and retrieving campaign data with Discord integration. See [memory-api/README.md](memory-api/README.md) for details.
+
+## ShadowrunGptMemory
+
+The C# WebAPI project includes several key components:
 
 - **Api**: Contains the WebAPI controllers that handle HTTP requests and responses.
   - **Controllers**: Includes controllers for managing users, campaigns, sessions, characters, and administrative tasks.
@@ -17,6 +21,19 @@ The project is organized into several key components:
   - **Repositories**: Implements the repository pattern for data access.
   - **Auth**: Configures OAuth2 authentication.
 
+## Memory API
+
+The Fastify/TypeScript web API provides:
+
+- CRUD operations for campaigns, sessions, characters, and arbitrary data
+- Discord integration for fetching and sending messages
+- API key authentication
+- MongoDB integration
+- OpenAPI documentation
+- Docker containerization
+
+See [memory-api/README.md](memory-api/README.md) for complete details.
+
 ## Features
 
 - **User Management**: Create, update, and delete users.
@@ -27,14 +44,16 @@ The project is organized into several key components:
 
 ## Setup Instructions
 
+### ShadowrunGptMemory (C#)
+
 1. Clone the repository:
    ```
-   git clone https://github.com/microsoft/WPF-Samples.git
+   git clone https://github.com/codeacula/shadowrun-anarchy-gm-gpt.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd ShadowrunGptMemory/src/ShadowrunGptMemory.Api
+   cd shadowrun-anarchy-gm-gpt/src/ShadowrunGptMemory.Api
    ```
 
 3. Restore the dependencies:
@@ -48,6 +67,42 @@ The project is organized into several key components:
    ```
 
 5. Access the API documentation and endpoints via Swagger or Postman.
+
+### Memory API (Fastify/TypeScript)
+
+1. Navigate to the memory-api directory:
+   ```
+   cd shadowrun-anarchy-gm-gpt/memory-api
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Copy the environment example file and configure it:
+   ```
+   cp .env.example .env
+   # Edit .env with your settings
+   ```
+
+4. Build the TypeScript code:
+   ```
+   npm run build
+   ```
+
+5. Start the server:
+   ```
+   npm start
+   ```
+
+6. Access the API at http://localhost:3000 and documentation at http://localhost:3000/docs
+
+Alternatively, use Docker Compose:
+```
+cd shadowrun-anarchy-gm-gpt/memory-api
+docker-compose up -d
+```
 
 ## Usage Guidelines
 
