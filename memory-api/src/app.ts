@@ -5,6 +5,9 @@ import cors from '@fastify/cors';
 import connectToDatabase from './utils/db';
 import config from './config';
 
+// Import yaml library
+const yaml = require('js-yaml');
+
 // Import routes
 import campaignRoutes from './api/routes/campaigns';
 import sessionRoutes from './api/routes/sessions';
@@ -61,6 +64,14 @@ fastify.get('/openapi.json', async () => {
   return fastify.swagger();
 });
 
+// OpenAPI YAML endpoint
+fastify.get('/openapi.yml', async (request, reply) => {
+  const spec = fastify.swagger();
+  const yamlSpec = yaml.dump(spec);
+  reply.type('text/yaml');
+  return yamlSpec;
+});
+
 // Register routes
 fastify.register(campaignRoutes, { prefix: '/campaigns' });
 fastify.register(sessionRoutes, { prefix: '/sessions' });
@@ -78,7 +89,7 @@ const start = async () => {
   try {
     // Connect to MongoDB
     await connectToDatabase();
-    
+
     // Start the server
     await fastify.listen({
       port: config.server.port,
