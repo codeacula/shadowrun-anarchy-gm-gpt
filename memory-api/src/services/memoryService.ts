@@ -1,4 +1,4 @@
-import { logger } from "@/utils/logger";
+import { logger } from "..//utils/logger";
 import { IMemory, Memory } from "../models/memory";
 
 export interface CreateMemoryDto {
